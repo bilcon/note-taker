@@ -27,3 +27,5 @@ class Store {
           .then(updatedNotes => this.write(updatedNotes))
           .then(() => this.newNote)
   }
+
+  module.exports = new Store();
