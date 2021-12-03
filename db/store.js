@@ -28,4 +28,17 @@ class Store {
           .then(() => this.newNote)
   }
 
+  getNotes() {
+    return this.read()
+        .then(notes => {
+            return JSON.parse(notes) || [];
+        })
+  }
+  removeNote(id) {
+    return this.getNotes()
+        .then(notes => notes.filter(note => note.id !== id))
+        .then(keptNotes => this.write(keptNotes))
+  }
+}
+
   module.exports = new Store();
