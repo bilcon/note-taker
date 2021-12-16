@@ -1,11 +1,11 @@
 const util = require("util");
 const fs = require("fs");
-const uuid = require("uuid").v1;
+const { uuid } = require("uuidv4");
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-class Notes {
+class Store {
   read() {
     return readFileAsync("db/db.json", "utf8");
   }
@@ -36,9 +36,9 @@ class Notes {
   async removeNote(id) {
     console.log("remove notes");
     const notes = await this.getNotes();
-    const updatedNotes = notes.filter((note) => note.id !== parseInt(id));
+    const updatedNotes = notes.filter((note) => note.id !== id);
     return await this.write(updatedNotes);
   }
 }
 
-module.exports = new Notes();
+module.exports = new Store();
